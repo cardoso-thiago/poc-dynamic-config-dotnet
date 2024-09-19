@@ -18,3 +18,10 @@ dotnet add TestApplication/TestApplication.csproj reference ./Core.LocalEnvConfi
 
 dotnet run --project TestApplication
 ```
+
+### Limpeza de cache local
+
+```shell
+rm -rf bin obj
+dotnet nuget locals all --clear
+```

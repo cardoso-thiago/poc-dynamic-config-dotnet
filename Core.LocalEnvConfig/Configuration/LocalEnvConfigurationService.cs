@@ -7,11 +7,12 @@ namespace Cardoso.Configuration
     {
         private readonly IConfiguration _configuration;
 
-        public LocalEnvConfigurationService()
+        public LocalEnvConfigurationService(IConfiguration configuration)
         {
             var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            .AddConfiguration(configuration)
+            .AddJsonFile("additionalappsettings.json", optional: true, reloadOnChange: true);
 
             _configuration = builder.Build();
         }
