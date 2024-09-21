@@ -1,6 +1,6 @@
 {
   "AdditionalAppSettings": {
-    "ApplicationName": "AdditionalTestApplication",
+    "ApplicationName": "AdditionalConsoleAppTest",
     "Version": "2.0.0"
   }
 }
