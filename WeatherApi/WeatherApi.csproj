@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Core.Hazelcast\Core.Hazelcast.csproj" />
     <ProjectReference Include="..\Core.LocalEnvConfig\Core.LocalEnvConfig.csproj" />
   </ItemGroup>
 

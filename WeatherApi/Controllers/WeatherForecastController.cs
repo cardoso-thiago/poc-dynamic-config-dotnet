@@ -25,6 +25,7 @@ public class WeatherForecastController : ControllerBase
     public IEnumerable<WeatherForecast> Get()
     {
         _logger.LogInformation("Nome da Aplicação: {AppName}", _configurationService.GetProperty("AppSettings:ApplicationName"));
+        _logger.LogInformation("Nome da Aplicação Adicional: {AdditionalAppName}", _configurationService.GetProperty("AdditionalAppSettings:ApplicationName"));
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

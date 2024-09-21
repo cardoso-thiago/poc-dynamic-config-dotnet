@@ -10,13 +10,13 @@ namespace Cardoso.Configuration
         public LocalEnvConfigurationService(IConfiguration configuration)
         {
             var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddConfiguration(configuration)
-            .AddJsonFile("additionalappsettings.json", optional: true, reloadOnChange: true);
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddConfiguration(configuration)
+                .AddJsonFile("additionalappsettings.json", optional: true, reloadOnChange: true);
 
             _configuration = builder.Build();
         }
-
+    
         public override string GetProperty(string key)
         {
             return _configuration[key] ?? "";
@@ -28,4 +28,3 @@ namespace Cardoso.Configuration
         }
     }
 }
-

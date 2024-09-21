@@ -1,0 +1,17 @@
+services:
+  hazelcast:
+    image: hazelcast/hazelcast:5.5.0
+    container_name: hazelcast-server
+    ports:
+      - "5701:5701"
+    environment:
+      - JAVA_OPTS=-Dhazelcast.config=/opt/hazelcast/hazelcast.xml 
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/hazelcast.xml
+
+  python-client:
+    build: .
+    container_name: hazelcast-python-client
+    depends_on:
+      - hazelcast
+    network_mode: "host"
