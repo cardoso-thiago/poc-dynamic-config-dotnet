@@ -25,3 +25,24 @@ dotnet run --project TestApplication
 rm -rf bin obj
 dotnet nuget locals all --clear
 ```
+
+## Chamadas de teste
+
+Adicionar uma nova chave:
+
+```shell
+curl -X POST http://localhost:5000/add-entry -H "Content-Type: application/json" -d '{"key": "AppSettings:ApplicationName", "value": "MyAppNameFromHazelcast"}'
+```
+
+Obter chaves atuais:
+
+```shell
+curl http://localhost:5000/list-entries
+```
+
+Chamada do `WeatherApi`:
+
+```shell
+curl -X 'GET' 'http://localhost:5062/WeatherForecast' -H 'accept: text/plain'
+```
+

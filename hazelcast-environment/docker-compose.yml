@@ -15,3 +15,5 @@ services:
     depends_on:
       - hazelcast
     network_mode: "host"
+    ports:
+      - "5000:5000"

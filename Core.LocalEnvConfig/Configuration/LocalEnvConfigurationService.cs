@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
-using Cardoso.Dynamic.Configuration;
+﻿using Cardoso.Dynamic.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace Cardoso.Configuration
 {
     public class LocalEnvConfigurationService : IConfigurationService
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfigurationRoot _configuration;
 
         public LocalEnvConfigurationService(IConfiguration configuration)
         {
@@ -16,7 +16,7 @@ namespace Cardoso.Configuration
 
             _configuration = builder.Build();
         }
-    
+
         public override string GetProperty(string key)
         {
             return _configuration[key] ?? "";
@@ -25,6 +25,11 @@ namespace Cardoso.Configuration
         public override string GetProperty(string key, string fallback)
         {
             return _configuration[key] ?? fallback;
+        }
+
+        public override void UpdateAll()
+        {
+            _configuration.Reload();
         }
     }
 }

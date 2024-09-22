@@ -2,8 +2,11 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY populate_map.py /app/populate_map.py
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip install hazelcast-python-client
+COPY populate_map.py /app/populate_map.py
+RUN pip install hazelcast-python-client flask
 
 CMD ["python", "/app/populate_map.py"]

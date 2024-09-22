@@ -1,37 +1,58 @@
+using Cardoso.Dynamic.Configuration;
 using Core.Hazelcast.Configuration.Cache;
 using Hazelcast;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Core.Hazelcast.Configuration.Initializer;
 
-public class HazelcastInitializer(HazelcastCache cache) : IHostedService
+public class HazelcastInitializer(HazelcastCache cache, IServiceProvider serviceProvider) : IHostedService
 {
+    private IHazelcastClient? _client;
+
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        var hazelcastConfiguration = GetHazelcastConfiguration().GetAwaiter().GetResult();
-        cache.Configuration = hazelcastConfiguration;
+        InitializeCacheFromHazelcast().GetAwaiter().GetResult();
         return Task.CompletedTask;
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    public async Task StopAsync(CancellationToken cancellationToken)
     {
-        return Task.CompletedTask;
+        if (_client != null) await _client.DisposeAsync();
     }
 
-    private async Task<Dictionary<string, string?>> GetHazelcastConfiguration()
+    private async Task InitializeCacheFromHazelcast()
     {
         var options = new HazelcastOptionsBuilder().Build();
+        _client = await HazelcastClientFactory.StartNewClientAsync(options);
+        await using var map = await _client.GetMapAsync<string, string>("custom-configuration-map-hazelcast");
 
-        await using var client = await HazelcastClientFactory.StartNewClientAsync(options);
-        await using var map = await client.GetMapAsync<string, string>("custom-configuration-map-hazelcast");
+        await map.SubscribeAsync(events => events
+            .EntryAdded((_, args) => { UpdateLocalCacheAndConfiguration(args.Key, args.Value); })
+            .EntryRemoved((_, args) => { UpdateLocalCacheAndConfiguration(args.Key, remove: true); })
+            .EntryUpdated((_, args) => { UpdateLocalCacheAndConfiguration(args.Key, args.Value); })
+        );
 
-        var externalConfigurations = new Dictionary<string, string?>();
         var entries = map.GetEntriesAsync();
         foreach (var entry in entries.Result)
         {
-            externalConfigurations[entry.Key] = entry.Value;
+            cache.Configuration[entry.Key] = entry.Value;
+        }
+    }
+
+    private void UpdateLocalCacheAndConfiguration(string key, string value = "", bool remove = false)
+    {
+        if (remove)
+        {
+            cache.Configuration.Remove(key);
+        }
+        else
+        {
+            cache.Configuration[key] = value;
         }
 
-        return externalConfigurations;
+        using var scope = serviceProvider.CreateScope();
+        var configurationService = scope.ServiceProvider.GetRequiredService<IConfigurationService>();
+        configurationService.UpdateAll();
     }
 }

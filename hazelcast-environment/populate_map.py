@@ -1,15 +1,33 @@
+from flask import Flask, request, jsonify
 import hazelcast
 
-if __name__ == "__main__":
-    client = hazelcast.HazelcastClient()
+app = Flask(__name__)
 
-    map = client.get_map("custom-configuration-map-hazelcast").blocking()
+client = hazelcast.HazelcastClient()
+map = client.get_map("custom-configuration-map-hazelcast").blocking()
 
-    map.put("custom.config", "Custom value")
-    map.put("custom.config2", "Custom value 2")
-    map.put("custom.config3", "Custom value 3")
-    map.put("AppSettings:ApplicationName", "ApplicationNameFromHazelcast")
+@app.route('/add-entry', methods=['POST'])
+def add_entry():
+    try:
+        data = request.json
+        key = data.get("key")
+        value = data.get("value")
+        
+        if not key or not value:
+            return jsonify({"error": "Chave ou valor ausente"}), 400
+        
+        map.put(key, value)
+        return jsonify({"message": f"Entrada adicionada: {key} -> {value}"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    print("Entradas adicionadas no map com sucesso.")
+@app.route('/list-entries', methods=['GET'])
+def list_entries():
+    try:
+        entries = map.entry_set()
+        return jsonify({"entries": dict(entries)}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    client.shutdown()
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

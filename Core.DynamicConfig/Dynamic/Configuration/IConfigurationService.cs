@@ -16,5 +16,7 @@
         /// <param name="fallback">Valor de fallback caso a propriedade não seja encontrada.</param>
         /// <returns>Valor da propriedade ou o valor de fallback.</returns>
         public abstract string GetProperty(string key, string fallback);
+        
+        public abstract void UpdateAll();
     }
 }
