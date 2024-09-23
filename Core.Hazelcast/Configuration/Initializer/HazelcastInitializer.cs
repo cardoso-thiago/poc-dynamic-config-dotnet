@@ -1,12 +1,13 @@
-using Cardoso.Dynamic.Configuration;
 using Core.Hazelcast.Configuration.Cache;
 using Hazelcast;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Core.Hazelcast.Configuration.Initializer;
 
-public class HazelcastInitializer(HazelcastCache cache, IServiceProvider serviceProvider) : IHostedService
+/// <summary>
+/// Inicializa o Cache local com o map custom-configuration-map-hazelcast e adiciona listeners para escutar as
+/// atualizações no map
+public class HazelcastInitializer(HazelcastCache cache) : IHostedService
 {
     private IHazelcastClient? _client;
 
@@ -36,7 +37,7 @@ public class HazelcastInitializer(HazelcastCache cache, IServiceProvider service
         var entries = map.GetEntriesAsync();
         foreach (var entry in entries.Result)
         {
-            cache.Configuration[entry.Key] = entry.Value;
+            UpdateLocalCacheAndConfiguration(entry.Key, entry.Value);
         }
     }
 
@@ -44,15 +45,13 @@ public class HazelcastInitializer(HazelcastCache cache, IServiceProvider service
     {
         if (remove)
         {
-            cache.Configuration.Remove(key);
+            cache.CacheDict.Remove(key);
         }
         else
         {
-            cache.Configuration[key] = value;
+            cache.CacheDict[key] = value;
         }
 
-        using var scope = serviceProvider.CreateScope();
-        var configurationService = scope.ServiceProvider.GetRequiredService<IConfigurationService>();
-        configurationService.UpdateAll();
+        cache.Update();
     }
 }

@@ -1,4 +1,4 @@
-using Cardoso.Dynamic.Configuration;
+using Core.DynamicConfig.Dynamic.Configuration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WeatherApi.Controllers;
@@ -10,10 +10,10 @@ public class WeatherForecastController(
     IConfigurationService configurationService)
     : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
+    private static readonly string[] Summaries =
+    [
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    ];
 
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()

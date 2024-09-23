@@ -1,4 +1,4 @@
-using Cardoso.Dynamic.Configuration;
+using Core.DynamicConfig.Dynamic.Configuration;
 using Core.Hazelcast.Configuration.Cache;
 using Core.Hazelcast.Configuration.Initializer;
 using Microsoft.Extensions.DependencyInjection;

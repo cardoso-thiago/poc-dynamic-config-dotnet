@@ -1,7 +1,7 @@
-using Cardoso.Dynamic.Configuration;
+using Core.DynamicConfig.Dynamic.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cardoso.Configuration.Extensions.DependencyInjection
+namespace Core.LocalEnvConfig.Configuration.Extensions.DependencyInjection
 {
     public static class LocalEnvConfigurationServiceExtensions
     {

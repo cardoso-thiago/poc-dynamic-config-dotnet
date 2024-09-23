@@ -1,7 +1,7 @@
-﻿using Cardoso.Dynamic.Configuration;
+﻿using Core.DynamicConfig.Dynamic.Configuration;
 using Microsoft.Extensions.Configuration;
 
-namespace Cardoso.Configuration
+namespace Core.LocalEnvConfig.Configuration
 {
     public class LocalEnvConfigurationService : IConfigurationService
     {
@@ -17,19 +17,15 @@ namespace Cardoso.Configuration
             _configuration = builder.Build();
         }
 
-        public override string GetProperty(string key)
+
+        public string GetProperty(string key)
         {
             return _configuration[key] ?? "";
         }
 
-        public override string GetProperty(string key, string fallback)
+        public string GetProperty(string key, string fallback)
         {
             return _configuration[key] ?? fallback;
-        }
-
-        public override void UpdateAll()
-        {
-            _configuration.Reload();
         }
     }
 }

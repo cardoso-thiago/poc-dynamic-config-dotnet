@@ -1,5 +1,5 @@
-﻿using Cardoso.Configuration.Extensions.DependencyInjection;
-using Cardoso.Dynamic.Configuration;
+﻿using Core.DynamicConfig.Dynamic.Configuration;
+using Core.LocalEnvConfig.Configuration.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
