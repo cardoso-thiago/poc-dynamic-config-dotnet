@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
 import hazelcast
+import json
 
 app = Flask(__name__)
 
 client = hazelcast.HazelcastClient()
-map = client.get_map("custom-configuration-map-hazelcast").blocking()
+map = client.get_map("WeatherApi").blocking()
+topic = client.get_topic("configuration.WeatherApi")
 
 @app.route('/add-entry', methods=['POST'])
 def add_entry():
@@ -17,6 +19,12 @@ def add_entry():
             return jsonify({"error": "Chave ou valor ausente"}), 400
         
         map.put(key, value)
+        message = {
+            "key": key,
+            "value": value
+        }
+        topic.publish(json.dumps(message))
+
         return jsonify({"message": f"Entrada adicionada: {key} -> {value}"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

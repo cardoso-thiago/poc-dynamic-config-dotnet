@@ -5,6 +5,7 @@ namespace Core.Hazelcast.Configuration.Cache;
 /// <summary>
 /// Armazena o Dictionary com as configurações do map do Hazelcast. É um ConfigurationProvider, para poder ser
 /// utilizado como fonte padrão de configurações
+/// </summary>
 public class HazelcastCache : ConfigurationProvider
 {
     public Dictionary<string, string?> CacheDict { get; } = new();
