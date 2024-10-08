@@ -46,3 +46,9 @@ Chamada do `WeatherApi`:
 curl -X 'GET' 'http://localhost:5062/WeatherForecast' -H 'accept: text/plain'
 ```
 
+### Publicar Local
+
+```shell
+dotnet pack --configuration Release
+mv bin/Release/*.nupkg ../nuget-local/
+```
