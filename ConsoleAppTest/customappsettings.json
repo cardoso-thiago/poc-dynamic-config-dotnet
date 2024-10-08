@@ -1,0 +1,9 @@
+{
+  "AppSettings": {
+    "ApplicationName": "CustomWeatherApi",
+    "Version": "1.0.0-Custom"
+  },
+  "CustomSettings": {
+    "MyCustomKey": "MyCustomValue"
+  }
+}

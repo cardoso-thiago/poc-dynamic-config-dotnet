@@ -8,6 +8,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHazelCastConfiguration();
 
+builder.Configuration.AddJsonFile("customappsettings.json", true, true);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

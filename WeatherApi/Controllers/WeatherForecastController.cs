@@ -22,6 +22,8 @@ public class WeatherForecastController(
             configurationService.GetProperty("AppSettings:ApplicationName"));
         logger.LogInformation("Nome da Aplicação Adicional: {AdditionalAppName}",
             configurationService.GetProperty("AdditionalAppSettings:ApplicationName"));
+        logger.LogInformation("Configuração customizada: {CustomConfig}",
+            configurationService.GetProperty("CustomSettings:MyCustomKey"));
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
