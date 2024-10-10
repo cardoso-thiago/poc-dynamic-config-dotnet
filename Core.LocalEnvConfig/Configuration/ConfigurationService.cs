@@ -3,11 +3,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace Core.LocalEnvConfig.Configuration
 {
-    public class LocalEnvConfigurationService : IConfigurationService
+    public class ConfigurationService : IConfigurationService
     {
         private readonly IConfigurationRoot _configuration;
 
-        public LocalEnvConfigurationService(IConfiguration configuration)
+        public ConfigurationService(IConfiguration configuration)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

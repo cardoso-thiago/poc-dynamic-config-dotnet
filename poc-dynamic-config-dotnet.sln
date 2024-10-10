@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.LocalEnvConfig", "Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Hazelcast", "Core.Hazelcast\Core.Hazelcast.csproj", "{2B2A8239-A6B1-4358-81A4-076A4C3276AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.AnotherLib", "Core.AnotherLib\Core.AnotherLib.csproj", "{B13AA1A7-319E-451F-8407-4556A5FFFFE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{2B2A8239-A6B1-4358-81A4-076A4C3276AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B2A8239-A6B1-4358-81A4-076A4C3276AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B2A8239-A6B1-4358-81A4-076A4C3276AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B13AA1A7-319E-451F-8407-4556A5FFFFE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B13AA1A7-319E-451F-8407-4556A5FFFFE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B13AA1A7-319E-451F-8407-4556A5FFFFE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B13AA1A7-319E-451F-8407-4556A5FFFFE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
